@@ -1,0 +1,53 @@
+{
+  "Noteworthy": {
+    "LibraryRoot": "",
+    "AllowAnyPath": false,
+    "ReadOnly": false,
+    "AllowDelete": false,
+    "MaxFileBytes": 50000000,
+    "DefaultPpq": 480,
+    "DefaultTempoBpm": 120.0,
+    "DefaultTimeSignatureNumerator": 4,
+    "DefaultTimeSignatureDenominator": 4,
+    "MaxNotesPerListing": 2000,
+    "MaxSearchResults": 500
+  },
+  "Server": {
+    "Host": "localhost",
+    "Port": 5711,
+    "Path": "/mcp",
+    "WindowsServiceName": "NoteworthyMCPSharp",
+    "Password": ""
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "File",
+        "Args": {
+          "path": "logs/noteworthymcp-.log",
+          "rollingInterval": "Day",
+          "retainedFileCountLimit": 14,
+          "fileSizeLimitBytes": 52428800,
+          "rollOnFileSizeLimit": true,
+          "shared": true,
+          "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {SourceContext}: {Message:lj}{NewLine}{Exception}"
+        }
+      }
+    ],
+    "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId" ]
+  }
+}
